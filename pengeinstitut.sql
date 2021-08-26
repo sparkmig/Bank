@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Vært: 127.0.0.1
--- Genereringstid: 26. 08 2021 kl. 10:57:00
+-- Genereringstid: 26. 08 2021 kl. 14:16:00
 -- Serverversion: 10.4.20-MariaDB
 -- PHP-version: 8.0.9
 
@@ -39,12 +39,13 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`Id`, `Owner`, `Amount`, `Name`) VALUES
-(1, 1, 99999, 'Opsparing'),
+(1, 1, 98999, 'Opsparing'),
 (5, 2, 1000, 'Opsparing'),
 (6, 3, 28050, 'Peter fra teknisk afdeling'),
 (9, 4, -8900, 'Bil'),
 (10, 4, 1000000, 'Opsparing'),
-(11, 5, -100000000, 'Minus');
+(11, 5, -100000000, 'Minus'),
+(12, 3, 1000, 'test');
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Id`, `UserName`, `Password`, `Name`, `UserRight`) VALUES
-(1, 'user', 'pass', 'Kurt Jensen', 1);
+(1, 'user', 'pass', 'Kurt Jensen', 1),
+(5, 'Mikkel', '1234', 'Mikkel', 1),
+(6, 'Matteo', '1234', 'Matteo', 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +156,7 @@ ALTER TABLE `__efmigrationshistory`
 -- Tilføj AUTO_INCREMENT i tabel `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Tilføj AUTO_INCREMENT i tabel `customers`
@@ -165,7 +168,7 @@ ALTER TABLE `customers`
 -- Tilføj AUTO_INCREMENT i tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
