@@ -11,11 +11,16 @@ namespace Pengeinstitut
 {
     public class Login
     {
-        static User user;
+        public static Storage.Models.User user;
         static void Main(string[] args)
         {
             Console.WriteLine("Velkommen til Danske bank");
-            Thread.Sleep(1000);
+            Console.WriteLine("Loading");
+            for (int i = 0; i < 20; i++)
+            {
+                Console.Write(".");
+                Thread.Sleep(10);
+            }
             Console.Clear();
 
             while (true)
@@ -28,9 +33,18 @@ namespace Pengeinstitut
 
                 user = new LoginService().Login(username, password);
 
-                if(user != null)
+                Console.Clear();
+                
+                if (user != null)
                 {
-                    LandingPage.Show(user);
+                    Console.WriteLine($"Velkommen {Login.user.Name}");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                }
+
+                while (user != null)
+                {
+                    LandingPage.Show();
                 }
             }
         }
