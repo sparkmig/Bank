@@ -11,6 +11,7 @@ namespace Business.Services
     public class AccountService
     {
         public List<Account> GetAccounts(int id) => new PengeinstitutContext().Accounts.Where(o => o.Owner == id).ToList();
+        public List<Account> GetAccounts() => new PengeinstitutContext().Accounts.ToList();
         public void AddMoneyToAccount(int id, double amount)
         {
             using (var ctx = new PengeinstitutContext())
@@ -57,6 +58,27 @@ namespace Business.Services
                 ctx.Accounts.Remove(account);
 
                 ctx.SaveChanges();
+            }
+        }
+        public void Transfer(int from, int to, double amount)
+        {
+            using (var ctx = new PengeinstitutContext())
+            {
+                var fromAccount = ctx.Accounts.Find(from);
+                var toAccount = ctx.Accounts.Find(to);
+
+                fromAccount.Amount -= amount;
+                toAccount.Amount += amount;
+
+                ctx.SaveChanges();
+            }
+        }
+
+        public bool DoesAccountExist(int id)
+        {
+            using (var ctx = new PengeinstitutContext())
+            {
+                return ctx.Accounts.Any(o => o.Id == id);
             }
         }
     }

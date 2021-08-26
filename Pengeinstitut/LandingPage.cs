@@ -10,32 +10,35 @@ namespace Pengeinstitut
 {
     public static class LandingPage
     {
-        public static void Show(User user)
+        public static void Show()
         {
-            Console.WriteLine($"Velkommen {user.Name}");
-            Thread.Sleep(1000);
-            while (true)
+            Console.WriteLine("0) Log ud");
+            Console.WriteLine("---------------------------------------");
+
+            Console.WriteLine("1) Vis kunder");
+            Console.WriteLine("2) Samlet kapital");
+            Console.WriteLine("3) Vis Brugere");
+
+            string input = Console.ReadLine();
+
+            switch (input)
             {
-                Console.Clear();
-
-                Console.WriteLine("1) Vis kunder");
-                Console.WriteLine("2) Samlet kapital");
-
-                string input = Console.ReadLine();
-
-                switch (input)
-                {
-                    case "1":
-                        CustomerList.Show();
-                        break;
-                    case "2":
-                        BankInfo.Capital();
-                        break;
-                    default:
-                        break;
-                }
-                Console.Clear();
+                case "0":
+                    Login.user = null;
+                    break;
+                case "1":
+                    CustomerList.Show();
+                    break;
+                case "2":
+                    BankInfo.Capital();
+                    break;
+                case "3":
+                    UserList.Show();
+                    break;
+                default:
+                    break;
             }
+            Console.Clear();
         }
     }
 }
