@@ -40,18 +40,10 @@ namespace Pengeinstitut
                 switch (input)
                 {
                     case "1":
-                        Console.WriteLine("Hvor mange penge ville du indsætte?");
-                        amount = double.Parse(Console.ReadLine());
-                        accountService.AddMoneyToAccount(account.Id, amount);
-                        Console.WriteLine("Pengene blev indsat!");
-                        Thread.Sleep(1000);
+                        Deposit(account, accountService);
                         break;
                     case "2":
-                        Console.WriteLine("Hvor mange penge ville du hæve?");
-                        amount = double.Parse(Console.ReadLine());
-                        accountService.WithdrawMoney(account.Id, amount);
-                        Console.WriteLine("Penge hævet");
-                        Thread.Sleep(1000);
+                        Withdraw(account, accountService);
                         break;
                     case "3":
                         Transfer(id, account.Amount, accountService);
@@ -107,6 +99,48 @@ namespace Pengeinstitut
             }
 
             new AccountService().Transfer(accountId, to, amount);
+        }
+
+        public static void Withdraw(Storage.Models.Account account, AccountService accountService)
+        {
+            Console.WriteLine("Hvor mange penge ville du hæve?");
+            
+            double amount;
+            amount = double.Parse(Console.ReadLine());
+           
+            if (amount == -1) return;
+
+            while (amount > account.Amount || amount < 0)
+            {
+                Console.WriteLine("Ugyldigt beløb, prøv igen!");
+                amount = double.Parse(Console.ReadLine());
+                if (amount == -1) return;
+            }
+
+            accountService.WithdrawMoney(account.Id, amount);
+            Console.WriteLine("Penge hævet");
+            Thread.Sleep(1000);
+        }
+        public static void Deposit(Storage.Models.Account account, AccountService accountService)
+        {
+
+            Console.WriteLine("Hvor mange penge ville du indsætte?");
+
+            double amount;
+            amount = double.Parse(Console.ReadLine());
+            
+            if (amount == -1) return;
+
+            while (amount > account.Amount || amount < 0)
+            {
+                Console.WriteLine("Ugyldigt beløb, prøv igen!");
+                amount = double.Parse(Console.ReadLine());
+                if (amount == -1) return;
+            }
+
+            accountService.AddMoneyToAccount(account.Id, amount);
+            Console.WriteLine("Pengene blev indsat!");
+            Thread.Sleep(1000);
         }
     }
 }
