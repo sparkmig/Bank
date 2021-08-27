@@ -13,22 +13,31 @@ namespace Business.Services
         public List<Account> GetAccounts(int id) => new PengeinstitutContext().Accounts.Where(o => o.Owner == id).ToList();
         public List<Account> GetAccounts() => new PengeinstitutContext().Accounts.ToList();
         public int AccountsCount() => new PengeinstitutContext().Accounts.Count();
-        public void AddMoneyToAccount(int id, double amount)
+        public List<Transaction> GetTransactions(int id) => new PengeinstitutContext().Transactions.Where(o => o.From == id || o.To == id).ToList();
+
+        public void DepositMoney(int id, double amount)
         {
+            Transaction transaction = new Transaction(id, -1, amount);
+
             using (var ctx = new PengeinstitutContext())
             {
                 var account = ctx.Accounts.Find(id);
                 account.Amount += amount;
+
+                ctx.Transactions.Add(transaction);
 
                 ctx.SaveChanges();
             }
         }
         public void WithdrawMoney(int id, double amount)
         {
+            Transaction transaction = new Transaction(id, -2, amount);
             using (var ctx = new PengeinstitutContext())
             {
                 var account = ctx.Accounts.Find(id);
                 account.Amount -= amount;
+
+                ctx.Transactions.Add(transaction);
 
                 ctx.SaveChanges();
             }
@@ -63,6 +72,8 @@ namespace Business.Services
         }
         public void Transfer(int from, int to, double amount)
         {
+            Transaction transaction = new Transaction(from, to, amount);
+
             using (var ctx = new PengeinstitutContext())
             {
                 var fromAccount = ctx.Accounts.Find(from);
@@ -70,6 +81,8 @@ namespace Business.Services
 
                 fromAccount.Amount -= amount;
                 toAccount.Amount += amount;
+
+                ctx.Transactions.Add(transaction);
 
                 ctx.SaveChanges();
             }

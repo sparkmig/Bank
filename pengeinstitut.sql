@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Vært: 127.0.0.1
--- Genereringstid: 26. 08 2021 kl. 14:16:00
+-- Genereringstid: 27. 08 2021 kl. 11:27:52
 -- Serverversion: 10.4.20-MariaDB
 -- PHP-version: 8.0.9
 
@@ -39,13 +39,11 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`Id`, `Owner`, `Amount`, `Name`) VALUES
-(1, 1, 98999, 'Opsparing'),
+(1, 1, 90001, 'Opsparing'),
 (5, 2, 1000, 'Opsparing'),
-(6, 3, 28050, 'Peter fra teknisk afdeling'),
-(9, 4, -8900, 'Bil'),
-(10, 4, 1000000, 'Opsparing'),
-(11, 5, -100000000, 'Minus'),
-(12, 3, 1000, 'test');
+(6, 3, 990, 'Peter fra teknisk afdeling'),
+(10, 4, 910000, 'Opsparing'),
+(14, 6, 128047, 'Kurts første konto');
 
 -- --------------------------------------------------------
 
@@ -70,8 +68,34 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`Id`, `FirstName`, `LastName`, `Birthday`, `Password`, `CPR`, `Phone`) VALUES
 (1, 'Mikkel', 'Gundersen', '2021-08-25 14:05:22', '123456789', '123456-7890', NULL),
 (3, 'Matteo', 'Vanggaard', '2003-02-04 00:00:00', 'skiftmig', '040203-9998', '88888888'),
-(4, 'Rokas', 'S', '2012-12-12 00:00:00', 'skiftmig', '121212-1212', '12345678'),
-(5, 'Jens', 'Niels', '2009-04-24 00:00:00', 'skiftmig', '2404-8888', '99999999');
+(4, 'Rokas', 'S', '2012-12-12 00:00:00', 'skiftmig', '121212-1212', '12345678');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur-dump for tabellen `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `Id` int(11) NOT NULL,
+  `From` int(11) NOT NULL,
+  `To` int(11) NOT NULL,
+  `Amount` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Data dump for tabellen `transactions`
+--
+
+INSERT INTO `transactions` (`Id`, `From`, `To`, `Amount`) VALUES
+(1, 6, -1, 1000),
+(2, 6, -2, 10),
+(3, 1, -2, 100),
+(4, 1, -1, 100000),
+(5, 1, -2, 1000),
+(6, 1, 1, 100),
+(7, 1, 14, 128047),
+(8, 10, 1, 90000);
 
 -- --------------------------------------------------------
 
@@ -118,7 +142,8 @@ INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
 ('20210825121759_ChangedNameOfAccount', '5.0.9'),
 ('20210825122004_Changed Name Of Customer', '5.0.9'),
 ('20210825122321_Add Account', '5.0.9'),
-('20210826080917_AddedPhone', '5.0.9');
+('20210826080917_AddedPhone', '5.0.9'),
+('20210827084540_Added Transaction', '5.0.9');
 
 --
 -- Begrænsninger for dumpede tabeller
@@ -134,6 +159,12 @@ ALTER TABLE `accounts`
 -- Indeks for tabel `customers`
 --
 ALTER TABLE `customers`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- Indeks for tabel `transactions`
+--
+ALTER TABLE `transactions`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -156,13 +187,19 @@ ALTER TABLE `__efmigrationshistory`
 -- Tilføj AUTO_INCREMENT i tabel `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Tilføj AUTO_INCREMENT i tabel `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Tilføj AUTO_INCREMENT i tabel `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Tilføj AUTO_INCREMENT i tabel `users`
