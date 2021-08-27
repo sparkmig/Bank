@@ -15,8 +15,9 @@ namespace Pengeinstitut
         {
             while (true)
             {
+                Storage.Models.Customer customer = service.FindCustomer(id);
+
                 Console.Clear();
-                Storage.Models.Customer customer =  service.FindCustomer(id);
                 Console.WriteLine("-1) Tilbage");
                 Console.WriteLine("---------------------------------------");
                 Console.WriteLine($"Navn: {customer.FirstName} {customer.LastName}");
