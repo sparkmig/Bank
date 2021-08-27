@@ -29,6 +29,7 @@ namespace Pengeinstitut
                 Console.WriteLine("1) Indsæt penge på konto");
                 Console.WriteLine("2) Hæv penge fra konto");
                 Console.WriteLine("3) Overfør Penge");
+                Console.WriteLine("4) Se historik");
                 Console.WriteLine("slet) Slet konto");
 
                 string input = Console.ReadLine();
@@ -45,6 +46,9 @@ namespace Pengeinstitut
                         break;
                     case "3":
                         Transfer(id, account.Amount, accountService);
+                        break;
+                    case "4":
+                        TransactionList.Show(id, accountService);
                         break;
                     case "slet":
                         Delete(id, accountService);
@@ -137,7 +141,7 @@ namespace Pengeinstitut
                 double.TryParse(Console.ReadLine(), out amount);
             }
 
-            accountService.AddMoneyToAccount(account.Id, amount);
+            accountService.DepositMoney(account.Id, amount);
             Console.WriteLine("Pengene blev indsat!");
             Thread.Sleep(1000);
         }
