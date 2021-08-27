@@ -17,6 +17,7 @@ namespace Pengeinstitut
                 Console.Clear();
                 Console.WriteLine("-1) Tilbage");
                 Console.WriteLine("---------------------------------------");
+
                 var accounts = accountService.GetAccounts(customer.Id);
 
                 for (int i = 0; i < accounts.Count; i++)
@@ -24,6 +25,7 @@ namespace Pengeinstitut
                     var account = accounts[i];
                     Console.WriteLine($"{i}) {account.Name} {account.Amount}");
                 }
+
                 Console.WriteLine($"{accounts.Count}) Tilføj Konto");
 
                 int input = int.Parse(Console.ReadLine());

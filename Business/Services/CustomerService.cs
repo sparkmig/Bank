@@ -11,18 +11,21 @@ namespace Business.Services
     public class CustomerService
     {
         public List<Customer> GetCustomers() => new PengeinstitutContext().Customers.ToList();
+        public int CustomerCount() => new PengeinstitutContext().Customers.Count();
 
         public void DeleteCustomer(int id)
         {
             using (var ctx = new PengeinstitutContext())
             {
-                var account = ctx.Customers.Find(id);
-                ctx.Customers.Remove(account);
+                var customer = ctx.Customers.Find(id);
+                ctx.Customers.Remove(customer);
+
+                var accounts = ctx.Accounts.Where(o => o.Owner == id);
+                ctx.Accounts.RemoveRange(accounts);
+
                 ctx.SaveChanges();
             }
         }
-
-        public int CustomerCount() => new PengeinstitutContext().Customers.Count();
 
         public Customer FindCustomer(int id)
         {
@@ -31,6 +34,7 @@ namespace Business.Services
                 return ctx.Customers.Find(id);
             }
         }
+
         public void Add(string firstname, string lastName,  string cpr, string password, DateTime birthday, string phone)
         {
             var customer = new Customer(firstname, lastName, cpr, password, birthday, phone);

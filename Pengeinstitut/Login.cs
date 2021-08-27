@@ -19,7 +19,7 @@ namespace Pengeinstitut
             for (int i = 0; i < 20; i++)
             {
                 Console.Write(".");
-                Thread.Sleep(10);
+                Thread.Sleep(20);
             }
             Console.Clear();
 
