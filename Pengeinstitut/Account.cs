@@ -20,8 +20,6 @@ namespace Pengeinstitut
                 Console.WriteLine("-1) Tilbage");
                 Console.WriteLine("---------------------------------------");
 
-                double amount;
-
                 var account = accountService.GetAccount(id);
 
                 Console.WriteLine($"{customer.FirstName} {customer.LastName} - {account.Name}");
@@ -49,10 +47,7 @@ namespace Pengeinstitut
                         Transfer(id, account.Amount, accountService);
                         break;
                     case "slet":
-                        Console.WriteLine("sletter....");
-                        accountService.Delete(id);
-                        Console.WriteLine("Slettet!");
-                        Thread.Sleep(1000);
+                        Delete(id, accountService);
                         return;
                     default:
                         break;
@@ -67,75 +62,79 @@ namespace Pengeinstitut
 
             new AccountService().Add(customerId, name);
         }
-
-        public static void Transfer(int accountId, double balance, AccountService accountService)
+        private static void Delete(int accountId, AccountService accountService)
+        {
+            Console.WriteLine("Sletter....");
+            accountService.Delete(accountId);
+            Console.WriteLine("Slettet!");
+            Thread.Sleep(1000);
+        }
+        private static void Transfer(int accountId, double balance, AccountService accountService)
         {
             Console.WriteLine("-1) Tilbage");
             Console.WriteLine("---------------------------------------");
             Console.Write("Indtast kontonummer du vile overføre til: ");
 
-            int to = int.Parse(Console.ReadLine());
-
+            _ = int.TryParse(Console.ReadLine(), out int to);
             if (to == -1) return;
 
             while (!accountService.DoesAccountExist(to))
             {
                 Console.Write("Kontonummer udgyldigt, prøv igen:");
-                to = int.Parse(Console.ReadLine());
+                _ = int.TryParse(Console.ReadLine(), out to);
                 if (to == -1) return;
             }
 
             Console.Write($"Beløb (Max {balance}): ");
-            double amount = double.Parse(Console.ReadLine());
+            _ = double.TryParse(Console.ReadLine(), out double amount);
 
-            while (amount > balance && amount > 0)
+            while (amount > balance || amount <= 0)
             {
+                if (amount == -1) return;
+
                 Console.WriteLine("Beløb ikke gyldigt, prøv igen");
 
                 Console.Write($"Beløb (Max {balance}): ");
-                amount = double.Parse(Console.ReadLine());
+                _ = double.TryParse(Console.ReadLine(), out amount);
 
-                if (amount == -1) return;
             }
 
-            new AccountService().Transfer(accountId, to, amount);
+            accountService.Transfer(accountId, to, amount);
         }
 
-        public static void Withdraw(Storage.Models.Account account, AccountService accountService)
+        private static void Withdraw(Storage.Models.Account account, AccountService accountService)
         {
             Console.WriteLine("Hvor mange penge ville du hæve?");
             
             double amount;
-            amount = double.Parse(Console.ReadLine());
-           
-            if (amount == -1) return;
+            _ = double.TryParse(Console.ReadLine(), out amount);
 
-            while (amount > account.Amount || amount < 0)
+            while (amount > account.Amount || amount <= 0)
             {
-                Console.WriteLine("Ugyldigt beløb, prøv igen!");
-                amount = double.Parse(Console.ReadLine());
                 if (amount == -1) return;
+
+                Console.WriteLine("Ugyldigt beløb, prøv igen!");
+                _ = double.TryParse(Console.ReadLine(), out amount);
             }
 
             accountService.WithdrawMoney(account.Id, amount);
             Console.WriteLine("Penge hævet");
             Thread.Sleep(1000);
         }
-        public static void Deposit(Storage.Models.Account account, AccountService accountService)
+        private static void Deposit(Storage.Models.Account account, AccountService accountService)
         {
 
             Console.WriteLine("Hvor mange penge ville du indsætte?");
 
             double amount;
-            amount = double.Parse(Console.ReadLine());
+            _ = double.TryParse(Console.ReadLine(), out amount);
             
-            if (amount == -1) return;
-
-            while (amount > account.Amount || amount < 0)
+            while (amount <= 0)
             {
-                Console.WriteLine("Ugyldigt beløb, prøv igen!");
-                amount = double.Parse(Console.ReadLine());
                 if (amount == -1) return;
+
+                Console.WriteLine("Ugyldigt beløb, prøv igen!");
+                double.TryParse(Console.ReadLine(), out amount);
             }
 
             accountService.AddMoneyToAccount(account.Id, amount);

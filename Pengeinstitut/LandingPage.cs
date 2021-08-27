@@ -16,7 +16,7 @@ namespace Pengeinstitut
             Console.WriteLine("---------------------------------------");
 
             Console.WriteLine("1) Vis kunder");
-            Console.WriteLine("2) Samlet kapital");
+            Console.WriteLine("2) Info om banken");
             Console.WriteLine("3) Vis Brugere");
 
             string input = Console.ReadLine();
@@ -30,7 +30,7 @@ namespace Pengeinstitut
                     CustomerList.Show();
                     break;
                 case "2":
-                    BankInfo.Capital();
+                    BankInfo.Show();
                     break;
                 case "3":
                     UserList.Show();

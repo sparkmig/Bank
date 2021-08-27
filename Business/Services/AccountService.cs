@@ -12,6 +12,7 @@ namespace Business.Services
     {
         public List<Account> GetAccounts(int id) => new PengeinstitutContext().Accounts.Where(o => o.Owner == id).ToList();
         public List<Account> GetAccounts() => new PengeinstitutContext().Accounts.ToList();
+        public int AccountsCount() => new PengeinstitutContext().Accounts.Count();
         public void AddMoneyToAccount(int id, double amount)
         {
             using (var ctx = new PengeinstitutContext())

@@ -22,6 +22,8 @@ namespace Business.Services
             }
         }
 
+        public int CustomerCount() => new PengeinstitutContext().Customers.Count();
+
         public Customer FindCustomer(int id)
         {
             using (var ctx = new PengeinstitutContext())
