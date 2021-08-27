@@ -9,19 +9,31 @@ namespace Pengeinstitut
 {
     public static class BankInfo
     {
-        public static void Capital()
+        public static void Show()
         {
-            var bankService = new BankService();
-            double capital = bankService.Capital();
+            while (true)
+            {
+                var bankService = new BankService();
+                var accountService = new AccountService();
+                var customerService = new CustomerService();
 
-            Console.Clear();
-            Console.WriteLine("-1) Tilbage");
-            Console.WriteLine("---------------------------------------");
-            Console.WriteLine($"Kapital: {capital}");
+                int customerCount = customerService.CustomerCount();
+                int accountCount = accountService.AccountsCount();
+                double capital = bankService.Capital();
 
-            string input = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("-1) Tilbage");
+                Console.WriteLine("---------------------------------------");
+                Console.WriteLine($"Navn: Danske Bank");
+                Console.WriteLine($"Kapital: {capital}");
+                Console.WriteLine($"Antal Kunder: {customerCount}");
+                Console.WriteLine($"Antal Konti: {accountCount}");
 
-            if (input == "-1") return;
+                string input = Console.ReadLine();
+
+                if (input == "-1") return;
+            }
+           
         }
     }
 }
